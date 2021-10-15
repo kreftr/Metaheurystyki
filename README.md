@@ -7,7 +7,7 @@ Decyzyjna wersja przedstawionego zagadnienia to pytanie:
 "Czy wartość co najmniej **C** może być osiągnięta bez przekraczania wagi **W**?"
 
 ## Definicja formalna
-Mamy do dyspozycji plecak o maksymalnej pojemności **B** oraz zbiór **N** elementów {**x<sub>1</sub>, x<sub>j</sub>, ... , x<sub>n**</sub>}, przy czym każdy element ma określoną wartość **c<sub>j**</sub> oraz wielkość oraz wielkość **w<sub>j**</sub>.
+Mamy do dyspozycji plecak o maksymalnej pojemności **B** oraz zbiór **N** elementów {**x<sub>1</sub>, x<sub>j</sub>, ... , x<sub>n**</sub>}, przy czym każdy element ma określoną wartość **c<sub>j**</sub> oraz wielkość **w<sub>j**</sub>.
 
 ## Źródła
 
