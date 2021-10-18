@@ -5,9 +5,6 @@
 
 using namespace std;
 
-// 1) Plecak - pojemność
-// 2) Wejście - zbiór elementów
-// 3) Wyjście - pozdbiór elementów wejściowych (którego suma wartości jest jak największa i mniejsza od pojemności plecaka)
 
 struct element
 {   
@@ -15,8 +12,14 @@ struct element
     int value;
 };
 
-int capacity;
-vector<element> input, output;
+struct input
+{
+    int capacity;
+    vector<element> set;
+};
+
+
+vector<element> output;
 
 vector<element> load_file(string file_name){
     vector<element> result = {};
@@ -30,20 +33,22 @@ vector<element> load_file(string file_name){
     return result;
 }
 
-void print_input(vector<element> input){
+void print(input input){
     cout<<"Wczytany zbiór: {";
-    for (element e : input){
+    for (element e : input.set){
         cout<<"{"<<e.weight<<","<<e.value<<"},";
     }
-    cout<<"}"<<endl;
+    cout<<"}   Wczytana pojemność: "<<input.capacity<<endl;
 }
 
 int main(int argc, char** argv){
 
-    capacity = stoi(argv[2]);
-    input = load_file(argv[1]);
+    input in;
+    
+    in.set = load_file(argv[1]);
+    in.capacity = stoi(argv[2]);
 
-    print_input(input);
+    print(in);
 
     return 0;
 }
