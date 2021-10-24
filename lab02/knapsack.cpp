@@ -18,8 +18,8 @@ struct input
     vector<element> set;
 };
 
-
 vector<element> output;
+
 
 vector<element> load_file(string file_name){
     vector<element> result = {};
