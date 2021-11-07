@@ -157,15 +157,15 @@ vector<element> generate_random_domain_point(input_data input, int mode){
 }
 
 
-void combination_rec(int offset, int elements_number, vector<element> &elements_set, vector<element> &combination, vector<vector<element>> &combinations){
+void combination_rec(int offset, int elements_number, input_data &problem, vector<element> &combination, vector<element> &best_found){
     if (elements_number == 0) {
-        combinations.push_back(combination);
+        if (goal_fuction(combination) > goal_fuction(best_found) && total_weight(combination) <= problem.capacity) best_found = combination;
         return;
     }
 
-    for (int i=offset; i <= elements_set.size() - elements_number; ++i) {
-        combination.push_back(elements_set[i]);
-        combination_rec(i+1, elements_number-1, elements_set, combination, combinations);
+    for (int i=offset; i <= problem.set.size() - elements_number; ++i) {
+        combination.push_back(problem.set[i]);
+        combination_rec(i+1, elements_number-1, problem, combination, best_found);
         combination.pop_back();
     }
 }
@@ -174,15 +174,8 @@ void combination_rec(int offset, int elements_number, vector<element> &elements_
 vector<element> next_solution(input_data problem, vector<element> solution){
     vector<element> best_found = solution;
     vector<element> combination;
-    vector<vector<element>> combinations;
 
-    for (int i = 1; i <= problem.set.size(); i++) combination_rec(0, i, problem.set, combination, combinations);
-
-    for (vector<element> c : combinations){
-        if (goal_fuction(c) > goal_fuction(best_found) && total_weight(c) <= problem.capacity) best_found = c;
-    }
-
-    //print_combinations(combinations);
+    for (int i = 1; i <= problem.set.size(); i++) combination_rec(0, i, problem, combination, best_found);
 
     return best_found;
 }

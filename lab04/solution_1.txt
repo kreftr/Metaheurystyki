@@ -1,0 +1,4 @@
+43 49
+1 6
+Wartość funkcji celu: 55
+Czas obliczeń: 0[ms]
