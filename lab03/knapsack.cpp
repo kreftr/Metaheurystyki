@@ -38,12 +38,28 @@ vector<element> load_file(string file_name){
 }
 
 
+void generate_random_problem_to_file(string file_name, int problem_size, int random_range){
+    ofstream myfile;
+    int weight, value;
+    myfile.open(file_name);
+    for (int i=0; i < problem_size; i++){
+        weight = rand() % random_range;
+        value = rand() % random_range;
+        myfile << weight;
+        myfile << " ";
+        myfile << value;
+        myfile <<"\n";
+    }
+    myfile.close();
+}
+
+
 void print_input(input_data input){
-    cout<<"Wczytany zbiór: {";
+    cout<<endl<<"Wczytany zbiór: {";
     for (element e : input.set){
         cout<<"{"<<e.weight<<","<<e.value<<"},";
     }
-    cout<<"}   Wczytana pojemność: "<<input.capacity<<endl;
+    cout<<"}"<<endl<<"Wczytana pojemność: "<<input.capacity<<endl<<endl;
 }
 
 
@@ -66,7 +82,7 @@ void print_solution(vector<element> solution){
     for (element e : solution){
         cout<<"{"<<e.weight<<","<<e.value<<"},";
     }
-    cout<<"}   Całkowita waga: "<<total_weight(solution)<<"   "<<"Całkowita wartość: "<<goal_fuction(solution)<<endl;
+    cout<<"}   Całkowita waga: "<<total_weight(solution)<<"   "<<"Całkowita wartość: "<<goal_fuction(solution)<<endl<<endl;
 }
 
 
@@ -168,13 +184,15 @@ int main(int argc, char** argv){
 
     print_input(input);
 
-    vector<element> x = generate_random_domain_point(input, 1);
+    //generate_random_problem_to_file("problem.txt", 25, 100);
 
-    print_solution(x);
+    vector<element> random_s = generate_random_domain_point(input, 1);
 
-    vector<element> b = next_solution(input, x);
+    print_solution(random_s);
 
-    print_solution(b);
+    vector<element> next_s = next_solution(input, random_s);
+
+    print_solution(next_s);
 
     return 0;
 }
