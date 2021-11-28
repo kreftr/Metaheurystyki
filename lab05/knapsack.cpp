@@ -205,7 +205,8 @@ vector<element> next_solution(input_data problem, vector<element> solution){
 
 vector<vector<element>> neighbor_solutions(vector<element> current_solution, input_data problem){
     vector<element> elements = problem.set;
-    vector<vector<element>> results; 
+    vector<vector<element>> results;
+    vector<element> tmp;
 
     for(int i=0; i < current_solution.size(); i++){
         for(int j=0; j < elements.size(); j++){
@@ -216,12 +217,28 @@ vector<vector<element>> neighbor_solutions(vector<element> current_solution, inp
         }
     }
 
-
     for(element e : elements){
         if(total_weight(current_solution)+e.weight <= problem.capacity){
             current_solution.push_back(e);
             results.push_back(current_solution);
             current_solution.pop_back();
+        }
+    }
+
+    
+    for(int j=0; j < current_solution.size(); j++){
+        
+        tmp = current_solution;
+        
+        swap(tmp[j], tmp.back());
+        tmp.pop_back();
+        
+        for(element e : elements){
+            if(total_weight(tmp)+e.weight <= problem.capacity){
+                tmp.push_back(e);
+                results.push_back(tmp);
+                tmp.pop_back();
+            }
         }
     }
 
@@ -232,16 +249,24 @@ vector<vector<element>> neighbor_solutions(vector<element> current_solution, inp
 vector<element> hill_climbing(vector<element> current_solution, input_data problem){
     
     vector<vector<element>> neighbors = neighbor_solutions(current_solution, problem);
+    vector<element> best_solution = current_solution;
 
-    for(int i = 0; i < neighbors.size(); i++){
-        if(goal_fuction(neighbors[i]) > goal_fuction(current_solution)){
-            current_solution = neighbors[i];
-            neighbors = neighbor_solutions(current_solution, problem);
-            i = 0;
+    bool new_solution = true;
+
+
+    while (new_solution)
+    {
+        new_solution = false;
+
+        for(int j = 0; j < neighbors.size(); j++) if(goal_fuction(neighbors[j]) > goal_fuction(best_solution)){
+            best_solution = neighbors[j];
+            new_solution = true;
         }
-    }
 
-    return current_solution;
+        if (new_solution) neighbors = neighbor_solutions(best_solution, problem); 
+    }
+    
+    return best_solution;
 }
 
 
